@@ -8,12 +8,23 @@ class SearchUserAPI extends BaseAPI {
 
   constructor(data = {}) {
     super();
-    this.data = JSON.stringify(data);
+    try {
+      this.data = JSON.stringify(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  request(id) {
+  request() {
+    let _id;
+    try {
+      const { id } = JSON.parse(this.data);
+      _id = id;
+    } catch (error) {
+      console.log(error);
+    }
     return http
-      .get(`${this.baseUrl}/user/${id}`, {
+      .get(`${this.baseUrl}/user/${_id}`, {
         withCredentials: true,
         headers: {
           'content-type': 'application/json',

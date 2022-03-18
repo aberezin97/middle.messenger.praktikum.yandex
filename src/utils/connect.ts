@@ -1,8 +1,7 @@
-import Block from './block';
 import store, { Indexed, StoreEvents } from './store';
 
 function connect(mapStateToProps: (state: Indexed) => Indexed) {
-  return function (Component: typeof Block) {
+  return function (Component: any) {
     return class extends Component {
       constructor(props: any) {
         super({ ...props, ...mapStateToProps(store.getState()) });
@@ -41,6 +40,10 @@ export const withToken = connect((state) => ({
 
 export const withMessages = connect((state) => ({
   messages: state.messages ? state.messages : [],
+}));
+
+export const withError = connect((state) => ({
+  error: state?.error
 }));
 
 export default connect;

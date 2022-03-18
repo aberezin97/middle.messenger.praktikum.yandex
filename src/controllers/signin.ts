@@ -1,6 +1,6 @@
 import SigninAPI from '../api/signin';
-import store from '../utils/store';
 import router from '../index';
+import store from '../utils/store';
 
 export interface SigninFormModel {
   login: string;
@@ -18,7 +18,7 @@ class SigninController {
         throw new Error(response.responseText);
       }
     } catch (error) {
-      console.log(error);
+      store.set('error', JSON.parse(error.message)['reason']);
     }
   }
 }

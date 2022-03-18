@@ -4,7 +4,7 @@ import './settings-change-password-form.styles.scss';
 
 import Input from '../input/input.block';
 import Button from '../button/button.block';
-import changeUserController from '../../controllers/change-user';
+import changeUserController, { ChangePasswordFormModel } from '../../controllers/change-user';
 import { getDataFromInputs } from '../../utils/forms';
 import { passwordRegex, passwordExplanation } from '../../utils/regex';
 
@@ -31,8 +31,8 @@ class SettingsChangePasswordForm extends Block {
           const el: HTMLInputElement | null = document.getElementById(
             'newPassword'
           ) as HTMLInputElement;
-          const foo = el ? el.value : '';
-          return passwordRegex.test(value) && value === foo;
+          const newPassword = el ? el.value : '';
+          return passwordRegex.test(value) && value === newPassword;
         },
       }),
       buttonSubmit: new Button({
@@ -43,10 +43,10 @@ class SettingsChangePasswordForm extends Block {
         },
       }),
       events: {
-        submit: (e) => {
+        submit: (e: Event) => {
           e.preventDefault();
           changeUserController.changePassword(
-            getDataFromInputs(['oldPassword', 'newPassword'])
+            getDataFromInputs(['oldPassword', 'newPassword']) as ChangePasswordFormModel
           );
         },
       },
